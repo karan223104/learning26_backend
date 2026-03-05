@@ -22,6 +22,18 @@ app.use("/user",userRoutes)
 const productRoutes = require("./src/routes/ProductRoutes")
 app.use("/product",productRoutes)
 
+const bookRoutes = require("./src/routes/BookRoutes")
+app.use("/book",bookRoutes)
+
+const cityRoutes = require("./src/routes/CityRoutes")
+app.use("/city",cityRoutes)
+
+const stateRoutes = require("./src/routes/StateRoutes")
+app.use("/state",stateRoutes)
+
+const categoryRoutes = require("./src/routes/CategoryRoutes")
+app.use("/category",categoryRoutes)
+
 const PORT = 3000;
 app.listen(PORT, () =>{                                         // server creation
     console.log(`server started on PORT ${PORT}`);
