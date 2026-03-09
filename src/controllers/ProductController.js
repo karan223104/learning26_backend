@@ -45,8 +45,55 @@ const deleteProduct = async(req,res)=>{
      }
 }
 
+const updateProduct = async(req,res) =>{
+    const updateData = await productSchema.findByIdAndUpdate(req.params.id,req.body,{new:true})
+    res.status(200).json({
+    message: "data updated..",
+    data: updateData,
+  })
+}
 
+const searchProduct = async(req,res) =>{
+    const searchData = await productSchema.find({productName:req.query.name})
+    res.status(200).json({
+    message: "data found",
+    data: searchData,
+  })
+}
+
+const addColor = async(req,res) =>{
+    try{
+    const updateColor = await productSchema.findByIdAndUpdate(req.params.id,{ $push: { productColors: req.body.productColors } },{ new: true })
+        res.status(201).json({
+            message:"color update successfully",
+            data:updateColor
+        })
+    }catch(error){
+        res.status(500).json({
+            message:"error in adding color",
+            error:error.message
+        })
+    }
+    
+}
+
+const removeColor = async (req, res) => {
+  try {
+    const removeColors = await productSchema.findByIdAndUpdate(req.params.id,{ $pull: { productColors: req.body.productColors } },{ new: true })
+
+    res.status(200).json({
+      message: "Color removed successfully",
+      data: removeColors
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error in removing color",
+      error: error.message
+    })
+  }
+}
 
 module.exports = {
-    getAllProduct,getProductById,addProduct,deleteProduct
+    getAllProduct,getProductById,addProduct,deleteProduct,updateProduct,searchProduct,addColor,removeColor
 }
