@@ -1,5 +1,7 @@
 const productSchema = require("../models/ProductModel")
 
+const uploadToCloudinary = require("../utils/CloudinaryUtils")
+
 const getAllProduct = async(req,res)=>{
     const product = await productSchema.find()
     res.json({
@@ -22,9 +24,20 @@ const getProductById = async(req,res) =>{
     }
 }
 
+
+
 const addProduct = async(req,res) =>{
-    // console.log("body...",req.body)
-    const savedProduct = await productSchema.create(req.body)
+
+    //to access file path
+        //console.log("file....",req.file)
+        //const savedProduct = await productSchema.create(req.body)
+        //const savedProduct = await productSchema.create({...req.body,imagePath:req.file.path})
+
+    const cloudinaryResponse = await uploadToCloudinary(req.file.path)
+
+    console.log("cloudinaryResponse",cloudinaryResponse) 
+
+    const savedProduct = await productSchema.create({...req.body,imagePath:cloudinaryResponse.secure_url})
     res.status(201).json({
         message:"product saved",
         data:savedProduct 
