@@ -34,7 +34,7 @@ app.use("/state",stateRoutes)
 const categoryRoutes = require("./src/routes/CategoryRoutes")
 app.use("/category",categoryRoutes)
 
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () =>{                                         // server creation
     console.log(`server started on PORT ${PORT}`);
 })
